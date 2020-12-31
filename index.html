@@ -60,6 +60,7 @@
       margin-bottom: auto;
       display: flex;
       box-shadow: 0px 3px rgba(37, 38, 44, 0.452);
+      min-width: 70px;
     }
 
     .score_board > div {
@@ -373,6 +374,137 @@
     }
 
 
+    /* Mobile */
+
+    @media screen and (max-width: 768px){
+      .score_div_border {
+        width: 90%;
+      }
+
+      .rules_section {
+        text-align: center;
+      }
+
+      .attribution {
+        display: none;
+      }
+
+    }
+
+    @media screen and (max-width: 600px){
+      .score_div_title > img {
+        height: 50px;
+      }
+    }
+
+    @media screen and (max-width: 480px){
+      .game_triangle > img {
+        height: 150px;
+      }
+
+      #game_section {
+        margin-top: -2rem;
+      }
+
+      #game_scissors_section {
+        height: 5.5rem;
+        width: 5.5rem;
+        margin-top: -9rem;
+        margin-right: -7rem;
+      }
+
+      #game_paper_section {
+        height: 5.5rem;
+        width: 5.5rem;
+        margin-top: -9rem;
+        margin-left: -7rem;
+      }
+
+      #game_rock_section {
+        height: 5.5rem;
+        width: 5.5rem;
+      }
+
+      .game_div_shadow {
+        height: 4.5rem;
+        width: 4.5rem;
+      }
+
+      .game_div_shadow > img {
+        height: 2.5rem;
+      }
+
+      .user_choosed {
+        margin: 0 auto auto auto;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .house_choosed {
+        margin: 0 auto auto auto;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      #game_user_picked_scissors {
+        height: 8rem;
+        width: 8rem;
+      }
+
+      #game_user_picked_paper {
+        height: 8rem;
+        width: 8rem;
+      }
+
+      #game_user_picked_rock {
+        height: 8rem;
+        width: 8rem;
+      }
+
+      #game_house_picked_scissors {
+        height: 8rem;
+        width: 8rem;
+        margin: auto;
+      }
+
+      #game_house_picked_paper {
+        height: 8rem;
+        width: 8rem;
+        margin: auto;
+      }
+
+      #game_house_picked_rock {
+        height: 8rem;
+        width: 8rem;
+        margin: auto;
+      }
+  
+      .game_div_shadow_second_step {
+        width: 6.5rem;
+        height: 6.5rem;
+      }
+
+      .game_div_shadow_second_step > img {
+        height: 2.5rem;
+      }
+
+      #game_house_section_second_step {
+        height: 6rem;
+        width: 6rem;
+      }
+
+      #game_house_section_second_step {
+        margin-top: 2rem;
+      }
+
+      #game_result {
+        position: absolute;
+        margin-top: 14rem;
+        margin-right: 0;
+      }
+
+    }
 
 
   </style>
