@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Rock, Paper, Scissors</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+
+    /* My custome style */
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap');
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      background: radial-gradient(at top, hsl(214, 47%, 23%), hsl(237, 49%, 15%));
+    }
+
+    /* Score section */
+
+    .score_section{
+      height: 25%;
+      width: 100%;
+      display: flex;
+    }
+
+    .score_div_border{
+      height: 70%;
+      width: 50%;
+      border: 2px hsl(217, 16%, 45%) solid;
+      border-radius: .5em;
+      margin: auto;
+    }
+
+    .score_div_title{
+      display: flex;
+      height: 100%;
+      margin: 0 1rem;
+      justify-content: space-between;
+    }
+
+    .score_div_title > img{
+      height: 80%;
+      margin: auto 0;
+    }
+
+    .score_board{
+      height: 80%;
+      width: 20%;
+      background-color: white;
+      border-radius: .3rem;
+      margin-top: auto;
+      margin-bottom: auto;
+      display: flex;
+      box-shadow: 0px 3px rgba(37, 38, 44, 0.452);
+    }
+
+    .score_board > div {
+      margin: auto;
+    }
+
+    #score {
+      color: hsl(229, 25%, 31%);
+      font-family: 'Barlow Semi Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .score_text{
+      color: hsl(229, 64%, 46%);
+      font-family: 'Barlow Semi Condensed', sans-serif;
+      font-weight: 700;
+      font-size: .8rem;
+      margin: .5rem 0 0 0;
+    }
+
+    /* Game section */
+
+    #game_section{
+      height: 70% ;
+      width: 100%;
+      display: flex;
+      flex-direction: column; 
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game_triangle{
+      position: absolute;
+    }
+
+    #game_paper_section{
+      position: relative;
+      height: 7.5rem;
+      width: 7.5rem;
+      background: radial-gradient(at top, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+      border-radius: 60%;
+      margin-top: -12rem;
+      margin-left: -10rem;
+      display: flex;
+      box-shadow: 0px 5px rgb(40, 70, 194);
+      cursor: pointer;
+    }
+
+    #game_scissors_section{
+      position: relative;
+      height: 7.5rem;
+      width: 7.5rem;
+      background: radial-gradient(at top, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+      border-radius: 60%;
+      margin-top: -12rem;
+      margin-right: -10rem;
+      display: flex;
+      box-shadow: 0px 5px rgb(199, 108, 27);
+      cursor: pointer;
+    }
+
+    #game_rock_section{
+      position: relative;
+      height: 7.5rem;
+      width: 7.5rem;
+      background: radial-gradient(at top, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+      border-radius: 60%;
+      display: flex;
+      box-shadow: 0px 5px rgb(156, 22, 49);
+      cursor: pointer;
+    }
+
+    .game_div_shadow {
+      width: 5.5rem;
+      height: 5.5rem;
+      background-color: white;
+      border-radius: 60%;
+      margin: auto;
+      box-shadow: inset 0px 6px lightgrey;
+      display: flex;
+    }
+
+    .game_div_shadow > img {
+      margin: auto;
+      height: 3rem;
+    }
+
+    .game_interaction_first_line {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 9rem;
+    }
+
+    /* Rules section */
+
+    .rules_section {
+      height: 5%;
+      width: 100%;
+      text-align: end;
+      margin-top: -1rem;
+    }
+
+    #rules_btn {
+      border: 1px solid white;
+      height: 100%;
+      width: fit-content;
+      font-family: 'Barlow Semi Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      border: 2px hsl(217, 16%, 45%) solid;
+      border-radius: .5em;
+      padding: .5rem 2rem;
+      margin: 2rem;
+      cursor: pointer;
+    }
+
+    /* Rules modal */
+
+    #rules_modal {
+      position: absolute;
+      z-index: 1000;
+      height: 100%;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      backdrop-filter: grayscale(40%);
+      display: none;
+    }
+
+    .rules_modal_div {
+      height: 60%;
+      width: 25%;
+      min-width: 300px;
+      margin: auto;
+      background-color: white;
+      border-radius: .5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rules_modal_top_line {
+      margin: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .rules_modal_top_line > p {
+      font-family: 'Barlow Semi Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: rgb(60, 64, 97);
+      margin-bottom: 0;
+      display: flex;
+      width: 100%;
+    }
+
+    .rules_modal_top_line > p > img {
+      margin: auto 0 auto auto;
+      cursor: pointer;
+    }
+
+    .rules_modal_div > img {
+      margin: auto;
+      width: 70%;
+    }
+
+    /* Game step 2 section */
+
+    #game_second_step_section {
+      height: 65% ;
+      width: 100%;
+      display: none;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .user_choosed {
+      margin-right: 5rem;
+    }
+
+    #game_user_picked_scissors {
+      height: 16rem;
+      width: 16rem;
+      background: radial-gradient(at top, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+      border-radius: 60%;
+      display: none;
+      box-shadow: 0px 5px rgb(199, 108, 27);
+    }
+
+    #game_user_picked_rock {
+      height: 16rem;
+      width: 16rem;
+      background: radial-gradient(at top, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+      border-radius: 60%;
+      display: none;
+      box-shadow: 0px 5px rgb(156, 22, 49);
+    }
+
+    #game_user_picked_paper {
+      height: 16rem;
+      width: 16rem;
+      background: radial-gradient(at top, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+      border-radius: 60%;
+      display: none;
+      box-shadow: 0px 5px rgb(40, 70, 194);
+    }
+
+    .game_div_shadow_second_step {
+      width: 13.5rem;
+      height: 13.5rem;
+      background-color: white;
+      border-radius: 60%;
+      margin: auto;
+      box-shadow: inset 0px 6px lightgrey;
+      display: flex;
+    }
+
+    .game_div_shadow_second_step > img {
+      margin: auto;
+      height: 100px;
+    }
+
+    #game_house_section_second_step {
+      height: 10rem;
+      width: 10rem;
+      background-color: rgba(20, 27, 49, 0.466);
+      border-radius: 60%;
+      display: flex;
+      margin: auto;
+      margin-top: 4.5rem;
+    }
+
+    #game_house_picked_scissors {
+      height: 16rem;
+      width: 16rem;
+      background: radial-gradient(at top, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+      border-radius: 60%;
+      display: none;
+      box-shadow: 0px 5px rgb(199, 108, 27);
+    }
+
+    #game_house_picked_rock {
+      height: 16rem;
+      width: 16rem;
+      background: radial-gradient(at top, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+      border-radius: 60%;
+      display: none;
+      box-shadow: 0px 5px rgb(156, 22, 49);
+    }
+
+    #game_house_picked_paper {
+      height: 16rem;
+      width: 16rem;
+      background: radial-gradient(at top, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+      border-radius: 60%;
+      display: none;
+      box-shadow: 0px 5px rgb(40, 70, 194);
+    }
+
+    #game_second_step_section p {
+      font-family: 'Barlow Semi Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      text-align: center;
+      text-shadow: 0px 2px hsl(229deg 40% 13%);
+    }
+
+    /* Game step 4 */
+
+    #game_result {
+      display: none;
+      margin-top: 8rem;
+      margin-right: 5rem;
+    }
+
+    #game_result > p {
+      font-family: 'Barlow Semi Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: white;
+      text-align: center;
+      margin: auto;
+      margin-bottom: .8rem !important;
+    }
+
+    #game_result > div {
+      background-color: white;
+      height: 2.5rem;
+      width: 10rem;
+      border-radius: .5rem;
+      box-shadow: 0px 3px rgba(37, 38, 44, 0.452);
+      display: flex;
+      margin: auto;
+      cursor: pointer;
+    }
+
+    #game_result > div > p{
+      font-family: 'Barlow Semi Condensed', sans-serif;
+      font-weight: 600;
+      font-size: .7rem;
+      color: hsl(229, 25%, 31%);
+      text-align: center;
+      margin: auto;
+      text-shadow: none;
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+
+  <section class="score_section">
+    <div class="score_div_border">
+      <div class="score_div_title">
+        <img src="./images/logo.svg" alt="">
+        <div class="score_board">
+          <div>
+            <p class="score_text">SCORE</p>
+            <p id="score"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="game_section">
+    <div class="game_triangle"><img src="images/bg-triangle.svg" alt="triangle"/></div>
+    <div class="game_interaction">
+      <div class="game_interaction_first_line">
+        <div id="game_paper_section">
+          <div class="game_div_shadow">
+            <img src="images/icon-paper.svg" alt="paper">
+          </div>
+        </div>
+        <div id="game_scissors_section">
+          <div class="game_div_shadow">
+            <img src="images/icon-scissors.svg" alt="scissors">
+          </div>
+        </div>
+      </div>
+      <div id="game_rock_section">
+        <div class="game_div_shadow">
+          <img src="images/icon-rock.svg" alt="rock">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="game_second_step_section">
+    <div class="user_choosed">
+      <p>YOU PICKED</p>
+      <div id="game_user_picked_scissors">
+        <div class="game_div_shadow_second_step">
+          <img src="images/icon-scissors.svg" alt="scissors">
+        </div>
+      </div>
+      <div id="game_user_picked_rock">
+        <div class="game_div_shadow_second_step">
+          <img src="images/icon-rock.svg" alt="rock">
+        </div>
+      </div>
+      <div id="game_user_picked_paper">
+        <div class="game_div_shadow_second_step">
+          <img src="images/icon-paper.svg" alt="paper">
+        </div>
+      </div>
+    </div>
+    <div id="game_result">
+      <p id="result"></p>
+      <div id="game_div_play_again"><p id="game_play_again_p">PLAY AGAIN</p></div>
+    </div>
+    <div class="house_choosed">
+      <p>THE HOUSE PICKED</p>
+      <div id="game_house_section_second_step"></div>
+      <div id="game_house_picked_scissors">
+        <div class="game_div_shadow_second_step">
+          <img src="images/icon-scissors.svg" alt="scissors">
+        </div>
+      </div>
+      <div id="game_house_picked_rock">
+        <div class="game_div_shadow_second_step">
+          <img src="images/icon-rock.svg" alt="rock">
+        </div>
+      </div>
+      <div id="game_house_picked_paper">
+        <div class="game_div_shadow_second_step">
+          <img src="images/icon-paper.svg" alt="paper">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rules_section">
+    <a id="rules_btn" onclick="openModalRules()">Rules</a>
+  </section>
+
+  <section id="rules_modal">
+    <div class="rules_modal_div">
+      <div class="rules_modal_top_line">
+        <p>RULES
+          <img src="./images/icon-close.svg" alt="close" onclick="closeModalRules()">
+        </p>
+      </div>
+      <img src="./images/image-rules.svg" alt="rules_graphic">
+    </div>
+  </section>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a target="_blank" href="https://github.com/Lilian-MMI">Ninian</a>.
+  </div>
+
+  <script>
+
+    let scoreUser = 0;
+    document.getElementById('score').textContent = scoreUser
+
+    choices = ['rock', 'paper', 'scissors']
+
+    function openModalRules() { document.getElementById('rules_modal').style.display = 'flex' }
+    function closeModalRules() { document.getElementById('rules_modal').style.display = 'none' }
+
+    let userPickedPaper= document.getElementById('game_paper_section');
+    let userPickedScissors= document.getElementById('game_scissors_section');
+    let userPickedRock= document.getElementById('game_rock_section');
+
+    userPickedPaper.onclick = function() { nextStepGame('paper') } 
+    userPickedScissors.onclick = function() { nextStepGame('scissors') }
+    userPickedRock.onclick = function() { nextStepGame('rock') }
+
+    function nextStepGame(choose){
+      document.getElementById('game_section').style.display = 'none';
+      document.getElementById('game_second_step_section').style.display = 'flex';
+      document.getElementById(`game_user_picked_${choose}`).style.display = 'flex';
+
+      setTimeout(function(){ gameBotPick(choose) },2000);
+    }
+
+    async function gameBotPick(userChoose){
+      let randomChoiceBot = Math.floor(Math.random() * choices.length);
+      document.getElementById('game_house_section_second_step').style.display = 'none';
+      document.getElementById(`game_house_picked_${choices[randomChoiceBot]}`).style.display = 'flex';
+      setTimeout(function(){ compareGameChoice(userChoose, choices[randomChoiceBot]) },500);
+    }
+
+    function compareGameChoice(userChoice, BotChoice){
+      let winner;
+      if (userChoice === 'paper') {
+        if (BotChoice === 'rock') {
+          document.getElementById('game_play_again_p').style.color = 'hsl(230, 89%, 62%)'
+          scoreUser ++;
+          winner = userChoice
+        } else {
+          if (BotChoice === 'scissors') {
+            document.getElementById('game_play_again_p').style.color = 'hsl(39, 89%, 49%)'
+            scoreUser --;
+            winner = BotChoice
+          }
+        }
+      }
+      else if (userChoice === 'rock') {
+        if (BotChoice === 'scissors') {
+          document.getElementById('game_play_again_p').style.color = 'hsl(349, 71%, 52%)'
+          scoreUser ++;
+          winner = userChoice
+        } else {
+          if (BotChoice === 'paper') {
+            document.getElementById('game_play_again_p').style.color = 'hsl(230, 89%, 62%)'
+            scoreUser --;
+            winner = BotChoice
+          }
+        }
+      }
+      else {
+        if (BotChoice === 'paper'){
+          document.getElementById('game_play_again_p').style.color = 'hsl(39, 89%, 49%)'
+          scoreUser ++;
+          winner = userChoice 
+        } else { 
+          if (BotChoice === 'rock') {
+            document.getElementById('game_play_again_p').style.color = 'hsl(349, 71%, 52%)'
+            scoreUser --;
+            winner = BotChoice
+          }
+        }
+      }
+      
+      if (winner === userChoice) {
+        document.getElementById('result').textContent = 'YOU WIN';
+      } else if (winner === BotChoice) {
+        document.getElementById('result').textContent = 'YOU LOSE';
+      } else {
+        document.getElementById('result').textContent = 'DRAW';
+      }
+
+      document.getElementById('score').textContent = scoreUser
+      document.getElementById('game_result').style.display = 'block'
+      document.getElementById('game_div_play_again').onclick = function() {playAgain(userChoice, BotChoice)}
+    }
+
+    function playAgain(userChoice, botChoice) {
+      document.getElementById('game_section').style.display = 'flex';
+      document.getElementById('game_second_step_section').style.display = 'none';
+      document.getElementById(`game_user_picked_${userChoice}`).style.display = 'none';
+      document.getElementById(`game_house_picked_${botChoice}`).style.display = 'none';
+      document.getElementById('game_house_section_second_step').style.display = 'flex';
+      document.getElementById('game_result').style.display = 'none';
+    }
+
+
+  </script>
+
+</body>
+</html>
